@@ -5,7 +5,7 @@
 // Computer randomly chooses rock, paper, or scissors
 // Decide who wins based on rps rules
 
-function computerChoice() {
+function randomChoice() {
     var computer = Math.floor(Math.random() * 3);
     if (computer == 0) return "rock";
     else if (computer == 1) return "paper";
@@ -15,33 +15,44 @@ function computerChoice() {
     }
 }
 
-function decision(user, comp) {
-    if (user == "rock") {
-        if (comp == "rock") console.warn("Tie");
-        else if (comp == "paper") console.error("Lose");
-        else if (comp == "scissors") console.log("Win");
-    }
-    if (user == "paper") {
-        if (comp == "rock") console.log("Win");
-        else if (comp == "paper") console.warn("Tie");
-        else if (comp == "scissors") console.error("Lose");
-    }
-    if (user == "scissors") {
-        if (comp == "rock") console.error("Lose");
-        else if (comp == "paper") console.log("Win");
-        else if (comp == "scissors") console.warn("Tie");
-    }
-}
+const rock = document.querySelector('#rock');
+rock.addEventListener('click', function () {
+    playRound("rock");
+});
 
-function game() {
-    var userChoice = prompt("Choose rock, paper, or scissors");
-    userChoice = userChoice.toLowerCase();
-    console.log("User picks " + userChoice);
-    var computer = computerChoice();
-    console.log("Computer chose " + computer);
-    decision(userChoice, computer);
-}
+const paper = document.querySelector('#paper');
+paper.addEventListener('click', function () {
+    playRound("paper");
+});
 
-for (let i = 0; i < 5; i++) {
-    game();
+const scissors = document.querySelector('#scissors');
+scissors.addEventListener('click', function () {
+    playRound("scissors");
+});
+
+const div = document.querySelector('#result');
+
+function playRound(choice) {
+    computer = randomChoice();
+    console.log("You picked " + choice + ".");
+    console.log("Computer picked " + computer + ".");
+    res = "error if you see this";
+    if (choice == "rock") {
+        if (computer == "rock") res = "It's a tie!";
+        else if (computer == "paper") res = "You lose!";
+        else if (computer == "scissors") res = "You win!";
+    }
+    else if (choice == "paper") {
+        if (computer == "rock") res = "You win!";
+        else if (computer == "paper") res = "It's a tie!";
+        else if (computer == "scissors") res = "You lose!";
+    }
+
+    else if (choice == "scissors") {
+        if (computer == "rock") res = "You lose!";
+        else if (computer == "paper") res = "You win!";
+        else if (computer == "scissors") res = "It's a tie!";
+    }
+
+    div.textContent=res;
 }
